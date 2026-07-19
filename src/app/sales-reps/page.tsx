@@ -8,7 +8,7 @@ const salesTeam = [
     id: 1,
     name: "TOS",
     role: "Senior Sales Representative",
-    email: "guo.jing2547@gmail.com",
+    email: "guo.jing2548@gmail.com",
     phone: "+66 81 234 5678",
     location: "Bangkok, HQ",
     avatar: "https://ui-avatars.com/api/?name=TOS&background=0D8ABC&color=fff&size=256"
@@ -17,7 +17,7 @@ const salesTeam = [
     id: 2,
     name: "JIK",
     role: "Product Solution Sales",
-    email: "guo.jing2547@gmail.com",
+    email: "guo.jing2548@gmail.com",
     phone: "+66 82 345 6789",
     location: "Bangkok, HQ",
     avatar: "https://ui-avatars.com/api/?name=JIK&background=F43F5E&color=fff&size=256"
@@ -26,7 +26,7 @@ const salesTeam = [
     id: 3,
     name: "PUD",
     role: "nabuakaeokhochon@gmail.com",
-    email: "guo.jing2547@gmail.com",
+    email: "guo.jing2548@gmail.com",
     phone: "+66 83 456 7890",
     location: "Bangkok, HQ",
     avatar: "https://ui-avatars.com/api/?name=PUD&background=FBBF24&color=fff&size=256"
@@ -35,7 +35,7 @@ const salesTeam = [
     id: 4,
     name: "HALL",
     role: "Sales Freelance",
-    email: "guo.jing2547@gmail.com",
+    email: "guo.jing2548@gmail.com",
     phone: "+66 84 567 8901",
     location: "Remote",
     avatar: "https://ui-avatars.com/api/?name=HALL&background=10B981&color=fff&size=256"
