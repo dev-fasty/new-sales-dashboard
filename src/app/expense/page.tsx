@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Loader2, Receipt, FileText, Calendar, User, DollarSign, Tag } from 'lucide-react';
+import { Loader2, Receipt, FileText, Calendar, User, DollarSign, Tag, Activity } from 'lucide-react';
 
 export interface Expense {
   id: string | number;
@@ -11,16 +11,17 @@ export interface Expense {
   jobDetail: string;
   amount: number;
   receipt: string;
+  status: 'Approved' | 'Pending' | 'Rejected';
 }
 
 const mockExpenses: Expense[] = [
-  { id: '1', dateBill: '27/12/2025', sales: 'Pattarawadee', expenseType: 'ค่ารับรอง', jobDetail: 'ประชุมลค.สำนักงานคณะ', amount: 1320.00, receipt: '45947' },
-  { id: '2', dateBill: '24/12/2025', sales: 'Chinsamith', expenseType: 'ค่าตั๋วเครื่องบิน', jobDetail: 'เดินทางไปพบ ลค. โรงพยาบาลหาดใหญ่', amount: 18651.78, receipt: '#1852402373700371366' },
-  { id: '3', dateBill: '28/12/2025', sales: 'Chinsamith', expenseType: 'ค่าเช่ารถ', jobDetail: 'เดินทางไปพบ ลค. โรงพยาบาลหาดใหญ่', amount: 2200.00, receipt: 'HS2512-28002' },
-  { id: '4', dateBill: '29/12/2025', sales: 'Chinsamith', expenseType: 'ค่าที่พัก', jobDetail: 'Visit ลค. โรงพยาบาลหาดใหญ่', amount: 4200.00, receipt: 'HS681229-01' },
-  { id: '5', dateBill: '5/2/2026', sales: 'Pattarawadee', expenseType: 'ค่าเดินทาง', jobDetail: 'ประชุมงานกับโรงพยาบาล', amount: 1413.00, receipt: '-' },
-  { id: '6', dateBill: '19/2/2026', sales: 'Pattarawadee', expenseType: 'ค่ารับรอง', jobDetail: 'ประชุมลค.กรมควบคุมโรค', amount: 2862.00, receipt: 'เล่มที่275เลข' },
-  { id: '7', dateBill: '9/1/2026', sales: 'Chinsamith', expenseType: 'ค่าใช้จ่ายอื่นๆ', jobDetail: 'ค่าบริการ ชาร์จ เดินทางไปพบ ลค.เทศบาลนครสวรรค์', amount: 428.18, receipt: 'EV6901-1-0002' }
+  { id: '1', dateBill: '27/12/2025', sales: 'Pattarawadee', expenseType: 'ค่ารับรอง', jobDetail: 'ประชุมลค.สำนักงานคณะ', amount: 1320.00, receipt: '45947', status: 'Approved' },
+  { id: '2', dateBill: '24/12/2025', sales: 'Chinsamith', expenseType: 'ค่าตั๋วเครื่องบิน', jobDetail: 'เดินทางไปพบ ลค. โรงพยาบาลหาดใหญ่', amount: 18651.78, receipt: '#1852402373700371366', status: 'Approved' },
+  { id: '3', dateBill: '28/12/2025', sales: 'Chinsamith', expenseType: 'ค่าเช่ารถ', jobDetail: 'เดินทางไปพบ ลค. โรงพยาบาลหาดใหญ่', amount: 2200.00, receipt: 'HS2512-28002', status: 'Pending' },
+  { id: '4', dateBill: '29/12/2025', sales: 'Chinsamith', expenseType: 'ค่าที่พัก', jobDetail: 'Visit ลค. โรงพยาบาลหาดใหญ่', amount: 4200.00, receipt: 'HS681229-01', status: 'Approved' },
+  { id: '5', dateBill: '5/2/2026', sales: 'Pattarawadee', expenseType: 'ค่าเดินทาง', jobDetail: 'ประชุมงานกับโรงพยาบาล', amount: 1413.00, receipt: '-', status: 'Rejected' },
+  { id: '6', dateBill: '19/2/2026', sales: 'Pattarawadee', expenseType: 'ค่ารับรอง', jobDetail: 'ประชุมลค.กรมควบคุมโรค', amount: 2862.00, receipt: 'เล่มที่275เลข', status: 'Pending' },
+  { id: '7', dateBill: '9/1/2026', sales: 'Chinsamith', expenseType: 'ค่าใช้จ่ายอื่นๆ', jobDetail: 'ค่าบริการ ชาร์จ เดินทางไปพบ ลค.เทศบาลนครสวรรค์', amount: 428.18, receipt: 'EV6901-1-0002', status: 'Approved' }
 ];
 
 export default function ExpensePage() {
@@ -94,6 +95,12 @@ export default function ExpensePage() {
                       Receipt No.
                     </div>
                   </th>
+                  <th className="py-5 px-6 font-semibold whitespace-nowrap">
+                    <div className="flex items-center gap-2">
+                      <Activity className="w-4 h-4 text-slate-400" />
+                      Status
+                    </div>
+                  </th>
                   <th className="py-5 px-6 font-semibold whitespace-nowrap text-right">
                     <div className="flex items-center justify-end gap-2">
                       <DollarSign className="w-4 h-4 text-slate-400" />
@@ -130,6 +137,15 @@ export default function ExpensePage() {
                     <td className="py-5 px-6 font-mono text-xs text-slate-400 whitespace-nowrap">
                       {expense.receipt !== '-' ? expense.receipt : <span className="text-slate-600 italic">No Receipt</span>}
                     </td>
+                    <td className="py-5 px-6 whitespace-nowrap">
+                      <span className={`px-3 py-1 rounded-full text-xs font-bold border flex items-center justify-center w-fit
+                        ${expense.status === 'Approved' ? 'bg-emerald-500/10 text-emerald-500 border-emerald-500/20' : 
+                          expense.status === 'Pending' ? 'bg-amber-500/10 text-amber-500 border-amber-500/20' : 
+                          'bg-rose-500/10 text-rose-500 border-rose-500/20'}`}
+                      >
+                        {expense.status}
+                      </span>
+                    </td>
                     <td className="py-5 px-6 font-bold text-cyan-400 text-right whitespace-nowrap">
                       ฿{Number(expense.amount).toLocaleString(undefined, { minimumFractionDigits: 2 })}
                     </td>
@@ -137,7 +153,7 @@ export default function ExpensePage() {
                 ))}
                 {data.length === 0 && (
                   <tr>
-                    <td colSpan={6} className="py-12 text-center text-slate-500">
+                    <td colSpan={7} className="py-12 text-center text-slate-500">
                       No expense records found.
                     </td>
                   </tr>
